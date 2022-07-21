@@ -1,4 +1,11 @@
-function! atimestamp#timestamp(msg) abort
+function! atimestamp#timestamp(...) abort
+  # setting comment
+  if a:0 >= 1
+    let msg = a:1
+  else
+    let msg = ''
+  endif
+
   :w
 
   " set comment_str from filetype
@@ -34,7 +41,7 @@ function! atimestamp#timestamp(msg) abort
   endwhile
   " not exists timestamp
   if l:nowline == -1
-    let message = strftime("%y/%m/%d %T", l:now_time).' 00:00:00 '.a:msg
+    let message = strftime("%y/%m/%d %T", l:now_time).' 00:00:00 '.l:msg
     call append(line('$'), l:comstart.'timestamp'.l:comend)
     call append(line('$'), l:comstart.'Data     Time     Diff     msg'.l:comend)
     call append(line('$'), l:comstart.message.l:comend)
@@ -42,9 +49,8 @@ function! atimestamp#timestamp(msg) abort
     return 1
   endif
 
-  let message = strftime("%y/%m/%d %T", l:now_time).' '.l:diffstr.' '.a:msg 
+  let message = strftime("%y/%m/%d %T", l:now_time).' '.l:diffstr.' '.l:msg 
   call append(line('$'), l:comstart.l:message.l:comend)
   :w
   return 1
 endfunction
-
