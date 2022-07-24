@@ -1,5 +1,5 @@
 function! atimestamp#timestamp(...) abort
-  # setting comment
+  " setting comment
   if a:0 >= 1
     let msg = a:1
   else
